@@ -1,4 +1,4 @@
-# moesi-cache-simulator
+
 # 🧠 MOESI Cache Coherence Simulation
 
 🌎 [Read in English](#-english) | 🇧🇷 [Leia em Português](#-português)
