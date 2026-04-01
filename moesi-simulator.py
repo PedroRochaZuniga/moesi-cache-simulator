@@ -1,13 +1,7 @@
 import random
 
-
-
-
 #50 itens para cada um ser um index da Memória Principal, vamos baser no Minecraft
 ITENS = ["Madeira", "Pedra", "Ferro", "Lã", "Carne", "Areia", "Vidro", "Balde", "Maçã", "Neve", "Terra", "Basalto", "Granito", "Grevilha", "Ouro", "Diamante", "Carvão", "Cobre", "Argila", "Osso", "Pena", "Linha", "Trigo", "Papel", "Livro", "Açúcar", "Mel", "Cera", "Lapis", "Redstone", "Quartzo", "Obsidiana", "Gelo", "Cristal", "Aluminio", "Ametista", "Batata", "Beterraba", "Melancia", "Abobora", "Cenoura", "Menta", "Tijolo", "Cogumelo", "Magma", "Isqueiro", "Ovo", "Bambu", "Fornalha", "Rubi"]
-
-
-
 
 def criar_memoria_principal(tamanho=50):
     memoria = []
@@ -18,24 +12,12 @@ def criar_memoria_principal(tamanho=50):
         memoria.append(dado)
     return memoria
 
-
-
-
 MEMORIA_PRINCIPAL = criar_memoria_principal()
-
-
-
-
-
-
-
 
 def mostrar_memoria_principal():
     print("Linha | Dado")
     for i in range(50):
         print(f"{i:<5} | {MEMORIA_PRINCIPAL[i]}")
-
-
 
 
 #Classe de apenas uma linha da Cache
@@ -45,15 +27,9 @@ class LinhadaCache:
         self.dado = None
         self.estado = "I"
    
-
-
     def __repr__(self):
         return f"Tag = {self.tag}, Dado = {self.dado}, Estado = {self.estado}"
    
-
-
-
-
 #Classe da Cache em geral
 class Cache:
     #inicializa a classe Cache com cinco linhas, cada linha sendo uma classe LinhadCache
@@ -88,7 +64,8 @@ class Cache:
             MEMORIA_PRINCIPAL[linha.tag] = linha.dado
             # print para visualizar quando isso acontece
             print(f"--> WRITE-BACK: O item da tag {linha.tag} voltou para o baú principal.")
-   
+
+    
     def carrega_bloco(self,tag:int,dados_owner:str = None):
         #linha livre
         i = 0
@@ -101,7 +78,8 @@ class Cache:
         linha_sub = self.linhas[index_sub]
         self.write_back(linha_sub)
         return self.inserir_na_linha(index_sub,tag)
-   
+
+    
     def inserir_na_linha(self,indice:int,tag:int,dados_owner:str =None):
         #coloca asa novas informações na linha, o estado fica temporário
         linha = self.linhas[indice]
@@ -116,7 +94,6 @@ class Cache:
         self.fifo.append(indice)
         return linha
    
-
 
 #desccobrir quais caches tem a tag especifica            
 def tag_nas_caches(tag:int):
@@ -155,7 +132,6 @@ def ler(cache,tag):
             nova_linha = cache.carrega_bloco(tag,dados_owner=novo_dado)
             nova_linha.estado = "S"
             return nova_linha.dado
-   
         for cache_compartilhada,linha_compartilhda in resto:
             if linha_compartilhda.estado == "E":
                 linha_compartilhda.estado = "S"
@@ -186,9 +162,7 @@ def escrita(cache,tag,novo_dado):
         if linha.estado == "O":
             for cache_compartilhada, linha_compartilhada in tag_nas_caches(tag):
                 if cache_compartilhada != cache:
-                    linha_compartilhada.estado = "I"
-            
-
+                    linha_compartilhada.estado = "I"        
             linha.estado = "M"
             linha.dado = novo_dado
             return
@@ -201,7 +175,6 @@ def escrita(cache,tag,novo_dado):
         nova_linha = cache.carrega_bloco(tag)
         nova_linha.estado = "M"
         nova_linha.dado = novo_dado
-   
 
 
 def quantidade_atual(dado):
@@ -307,13 +280,6 @@ def menu():
 
 
 
-
-
-
-
-
-
-
 #Criando cache para os 3 processadores (aq a gnt ta usando players como processadores, então são os 3 jogadores)
 Player1 = Cache()
 Player2 = Cache()
@@ -321,9 +287,4 @@ Player3 = Cache()
 CACHES = [Player1,Player2,Player3]
 
 
-
-
 menu()
-
-
-
